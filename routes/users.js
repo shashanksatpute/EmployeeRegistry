@@ -3,7 +3,13 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  var jsonResponse={
+    "items": [
+      { "id": 1, "name": "Apples",  "price": "$2" },
+      { "id": 2, "name": "Peaches", "price": "$5" }
+    ] 
+  };
+  res.send(jsonResponse);
 });
 
 module.exports = router;
