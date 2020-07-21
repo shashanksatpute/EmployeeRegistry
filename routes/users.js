@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const ADODB = require('node-adodb');
-const connection = ADODB.open('Provider=Microsoft.Jet.OLEDB.4.0;Data Source=./Database/Employee_Data.mdb;');
+//const ADODB = require('node-adodb');
+//const connection = ADODB.open('Provider=Microsoft.Jet.OLEDB.4.0;Data Source=./Database/Employee_Data.mdb;');
  
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -23,20 +23,32 @@ router.get('/', function(req, res, next) {
     ] 
   };
 
-  connection
+ var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://Shashank:shashank1@ds139896.mlab.com:39896/heroku_vc2qnm80";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("heroku_vc2qnm80");
+  dbo.collection("Employee_Data").findOne({}, function(err, result) {
+    if (err) throw err;
+    console.log(JSON.stringify(result));
+    db.close();
+  });
+});
+ /* connection
   .query('SELECT * FROM Employee_Details')
   .then(data => {
     var jsonResponse={
       "items": data          
     }
-    console.log(JSON.stringify(data, null, 2));
-    res.send(jsonResponse);
+    console.log(data, null, 2));
+   
   })
   .catch(error => {
     console.error(error);
-  });
+  });*/
 
-  
+  res.send(jsonResponse);
 });
 
 module.exports = router;
