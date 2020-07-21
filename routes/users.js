@@ -34,7 +34,7 @@ MongoClient.connect(url, function(err, db) {
     var jsonResponse={
       "items": result          
     }
-    console.log(JSON.stringify(result));
+    console.log(result);
     res.send(jsonResponse);
     db.close();
   });
