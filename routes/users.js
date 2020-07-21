@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-
+const ADODB = require('node-adodb');
+const connection = ADODB.open('Provider=Microsoft.Jet.OLEDB.4.0;Data Source=./Database/Employee_Data.mdb;');
+ 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   var jsonResponse={
@@ -20,7 +22,21 @@ router.get('/', function(req, res, next) {
       { name: 'Shruti', surname: 'Satpute', birthYear: 1992, birthCity: 89,skills:"Drawing,running",Department:"ok" },
     ] 
   };
-  res.send(jsonResponse);
+
+  connection
+  .query('SELECT * FROM Employee_Details')
+  .then(data => {
+    var jsonResponse={
+      "items": data          
+    }
+    console.log(JSON.stringify(data, null, 2));
+    res.send(jsonResponse);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+  
 });
 
 module.exports = router;
