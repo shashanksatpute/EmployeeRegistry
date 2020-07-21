@@ -29,7 +29,7 @@ var url = "mongodb://Shashank:shashank1@ds139896.mlab.com:39896/heroku_vc2qnm80"
 MongoClient.connect(url, function(err, db) {
   if (err) throw err;
   var dbo = db.db("heroku_vc2qnm80");
-  dbo.collection("Employee_Data").find({}, function(err, result) {
+  dbo.collection("Employee_Data").find({}).toArray(function(err, result) {
     if (err) throw err;
     var jsonResponse={
       "items": result          
