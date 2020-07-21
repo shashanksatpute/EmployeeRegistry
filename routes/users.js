@@ -29,9 +29,13 @@ var url = "mongodb://Shashank:shashank1@ds139896.mlab.com:39896/heroku_vc2qnm80"
 MongoClient.connect(url, function(err, db) {
   if (err) throw err;
   var dbo = db.db("heroku_vc2qnm80");
-  dbo.collection("Employee_Data").findOne({}, function(err, result) {
+  dbo.collection("Employee_Data").find({}, function(err, result) {
     if (err) throw err;
+    var jsonResponse={
+      "items": result          
+    }
     console.log(JSON.stringify(result));
+    res.send(jsonResponse);
     db.close();
   });
 });
@@ -48,7 +52,7 @@ MongoClient.connect(url, function(err, db) {
     console.error(error);
   });*/
 
-  res.send(jsonResponse);
+ // res.send(jsonResponse);
 });
 
 module.exports = router;
